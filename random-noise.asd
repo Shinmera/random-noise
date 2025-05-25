@@ -11,6 +11,8 @@
                (:file "toolkit")
                (:file "value")
                (:file "perlin")
+               (:file "simplex")
+               (:file "voronoi")
                (:file "documentation"))
   :depends-on (:documentation-utils
                :3d-math)
