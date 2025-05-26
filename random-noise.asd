@@ -28,5 +28,7 @@
   :source-control (:git "https://github.com/Shinmera/random-noise.git")
   :serial T
   :components ((:file "test"))
-  :depends-on (:random-noise :parachute)
+  :depends-on (:random-noise
+               :parachute
+               :zpng)
   :perform (asdf:test-op (op c) (uiop:symbol-call :parachute :test :org.shirakumo.random-noise.test)))
