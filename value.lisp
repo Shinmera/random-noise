@@ -1,6 +1,6 @@
 (in-package #:org.shirakumo.random-noise)
 
-(define-noise-function value-noise/1d (point deriv)
+(define-noise-function value/1d (point deriv)
   (let* ((hx0 (noise ix0))
          (hx1 (noise ix1))
          (dtx (smooth-dt tx0))
@@ -10,7 +10,7 @@
     (vsetf deriv (* b dtx) 0 0)
     (/ (+ a (* b tx)) 255)))
 
-(define-noise-function value-noise/2d (point deriv)
+(define-noise-function value/2d (point deriv)
   (let* ((h0 (noise ix0))
          (h1 (noise ix1))
          (h00 (noise (+ h0 iy0)))
@@ -31,7 +31,7 @@
            0)
     (/ (+ a (* b tx) (* (+ c (* d tx)) ty)) 255)))
 
-(define-noise-function value-noise/3d (point deriv)
+(define-noise-function value/3d (point deriv)
   (let* ((h0 (noise ix0))
          (h1 (noise ix1))
          (h00 (noise (+ h0 iy0)))
@@ -68,7 +68,7 @@
           (* (+ d (* f tx) (* (+ g (* h tx)) ty)) tz))
        255)))
 
-(define-noise-entry-function value-noise
-  (vec3 value-noise/3d)
-  (vec2 value-noise/2d)
-  (float value-noise/1d))
+(define-noise-entry-function value
+  (vec3 value/3d)
+  (vec2 value/2d)
+  (float value/1d))

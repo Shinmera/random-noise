@@ -2,7 +2,7 @@
 
 (let ((gradients (coerce '(1f0 -1f0) '(simple-array single-float (*)))))
   (declare (type (simple-array single-float (2)) gradients))
-  (define-noise-function perlin-noise/1d (point deriv)
+  (define-noise-function perlin/1d (point deriv)
     (let* ((gx0 (aref gradients (logand (noise ix0) 1)))
            (gx1 (aref gradients (logand (noise ix1) 1)))
            (vx0 (* gx0 tx0))
@@ -24,7 +24,7 @@
                     (nvunit (vec2 -1 +1))
                     (nvunit (vec2 +1 -1))
                     (nvunit (vec2 -1 -1)))
-  (define-noise-function perlin-noise/2d (point deriv)
+  (define-noise-function perlin/2d (point deriv)
     (flet ((dot (v x y)
              (+ (* (vx v) x) (* (vy v) y))))
       (declare (inline dot))
@@ -76,7 +76,7 @@
                     (nvunit (vec3 -1  1  0))
                     (nvunit (vec3  0 -1  1))
                     (nvunit (vec3  0 -1 -1)))
-  (define-noise-function perlin-noise/3d (point deriv)
+  (define-noise-function perlin/3d (point deriv)
     (flet ((dot (v x y z)
              (+ (* (vx v) x) (* (vy v) y) (* (vz v) z))))
       (declare (inline dot))
@@ -137,7 +137,7 @@
         (setf (vz deriv) (* (+ d (* f tx) (* (+ g (* h tx)) ty)) dtz))
         (+ a (* b tx) (* (+ c (* e tx)) ty) (* (+ d (* f tx) (* (+ g (* h tx)) ty)) tz))))))
 
-(define-noise-entry-function perlin-noise
-  (vec3 perlin-noise/3d)
-  (vec2 perlin-noise/2d)
-  (float perlin-noise/1d))
+(define-noise-entry-function perlin
+  (vec3 perlin/3d)
+  (vec2 perlin/2d)
+  (float perlin/1d))
