@@ -1,5 +1,5 @@
 (defpackage #:org.shirakumo.random-noise
-  (:use #:cl #:org.shirakumo.fraf.math)
+  (:use #:cl)
   (:export
    #:value/1d
    #:value/2d

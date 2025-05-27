@@ -16,7 +16,7 @@
 (defun xxhash (&optional (seed 1))
   (!32 (+ seed PRIME-E)))
 
-(declaim (inline xxhash-rotate-left xxhash-eat xxhash-eat-byte xxhash-int xxhash-byte xxhash-float))
+(declaim (inline xxhash-rotate-left xxhash-eat xxhash-eat-byte xxhash-int xxhash-byte xxhash-float xhhash-float*))
 (defun xxhash-rotate-left (xxhash steps)
   (declare (type xxhash xxhash))
   (declare (type (integer 0 31) steps))
@@ -56,3 +56,10 @@
   (declare (type (integer 0 3) byte))
   (declare (optimize speed (safety 1)))
   (* (xxhash-byte xxhash byte) (/ 255.0)))
+
+(defun xxhash-float* (xxhash size offset)
+  (declare (type xxhash xxhash))
+  (declare (type (integer 0 32) size offset))
+  (declare (optimize speed (safety 1)))
+  (/ (float (ldb (byte size offset) (xxhash-int xxhash)) 0f0)
+     (1- (ash 1 size))))

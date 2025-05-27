@@ -27,6 +27,10 @@
     (setf (dt lattice) (* tt tt (+ (* tt (- (* tt 30) 60)) 30)))
     lattice))
 
+(defun normal-lattice/validate (point frequency)
+  (declare (ignore frequency))
+  point)
+
 (defun tiling-lattice (coordinate frequency &optional (lattice (lattice)))
   (declare (type lattice lattice))
   (declare (type single-float coordinate frequency))
@@ -44,6 +48,20 @@
     (setf (tt lattice) (* tt tt tt (+ (* tt (- (* tt 6) 15)) 10)))
     (setf (dt lattice) (* tt tt (+ (* tt (- (* tt 30) 60)) 30)))
     lattice))
+
+(defun tiling-lattice/validate (point frequency)
+  (cond ((= -1 point)
+         (1- frequency))
+        ((= point frequency)
+         0)
+        (T
+         point)))
+
+(declaim (inline lattice-validator))
+(defun lattice-validator (lattice)
+  (cond ((eq lattice #'normal-lattice) #'normal-lattice/validate)
+        ((eq lattice #'tiling-lattice) #'tiling-lattice/validate)
+        (T (error "Unknown lattice type."))))
 
 (defun lattice/1d (lattice gradient position frequency xxhash)
   (declare (type (point 1) position))
