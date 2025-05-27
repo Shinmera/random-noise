@@ -122,3 +122,12 @@
   :update update/3d/worley
   :distance distance/3d/worley
   :finalize finalize/3d/worley)
+
+(defun worley/1d (position frequency xxhash &optional (lattice #'normal-lattice) (function :f2-f1))
+  (voronoi/1d position frequency xxhash lattice (voronoi-method :worley 1) function))
+
+(defun worley/2d (position frequency xxhash &optional (lattice #'normal-lattice) (function :f2-f1))
+  (voronoi/2d position frequency xxhash lattice (voronoi-method :worley 2) function))
+
+(defun worley/3d (position frequency xxhash &optional (lattice #'normal-lattice) (function :f2-f1))
+  (voronoi/3d position frequency xxhash lattice (voronoi-method :worley 3) function))

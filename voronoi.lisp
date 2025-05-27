@@ -45,16 +45,16 @@
     `(setf (voronoi-method ',type ,arity)
            (make-voronoi-method #',init #',update #',distance #',finalize))))
 
-(defmacro with-voronoi-method ((method arity) &body body)
-  `(let* ((method (the voronoi-method (voronoi-method ,method ,arity)))
+(defmacro with-voronoi-method (method &body body)
+  `(let* ((method (the voronoi-method ,method))
           (init (voronoi-init method))
           (update (voronoi-update method))
           (distance (voronoi-distance method))
           (finalize (voronoi-finalize method)))
      ,@body))
 
-(defun voronoi/1d (lattice method position frequency xxhash &optional (function :f2-f1))
-  (with-voronoi-method (method 1)
+(defun voronoi/1d (position frequency xxhash lattice method &optional (function :f2-f1))
+  (with-voronoi-method method
     (let ((x (lattice))
           (data (make-voronoi-data))
           (validator (lattice-validator lattice)))
@@ -77,8 +77,8 @@
          (sample (- (bv data) (av data))
                  (* frequency (- (bdx data) (adx data)))))))))
 
-(defun voronoi/2d (lattice method position frequency xxhash &optional (function :f2-f1))
-  (with-voronoi-method (method 2)
+(defun voronoi/2d (position frequency xxhash lattice method &optional (function :f2-f1))
+  (with-voronoi-method method
     (let ((x (lattice)) (y (lattice))
           (data (make-voronoi-data))
           (validator (lattice-validator lattice)))
@@ -115,8 +115,8 @@
                  (* frequency (- (bdx data) (adx data)))
                  (* frequency (- (bdy data) (ady data)))))))))
 
-(defun voronoi/3d (lattice method position frequency xxhash &optional (function :f2-f1))
-  (with-voronoi-method (method 3)
+(defun voronoi/3d (position frequency xxhash lattice method &optional (function :f2-f1))
+  (with-voronoi-method method
     (let ((x (lattice)) (y (lattice)) (z (lattice))
           (data (make-voronoi-data))
           (validator (lattice-validator lattice)))

@@ -41,3 +41,12 @@
   :init init/worley
   :update update/3d/worley
   :distance distance/3d/chebyshev)
+
+(defun chebyshev/1d (position frequency xxhash &optional (lattice #'normal-lattice) (function :f2-f1))
+  (voronoi/1d position frequency xxhash lattice (voronoi-method :chebyshev 1) function))
+
+(defun chebyshev/2d (position frequency xxhash &optional (lattice #'normal-lattice) (function :f2-f1))
+  (voronoi/2d position frequency xxhash lattice (voronoi-method :chebyshev 2) function))
+
+(defun chebyshev/3d (position frequency xxhash &optional (lattice #'normal-lattice) (function :f2-f1))
+  (voronoi/3d position frequency xxhash lattice (voronoi-method :chebyshev 3) function))

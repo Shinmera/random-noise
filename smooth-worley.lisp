@@ -154,3 +154,12 @@
   :update update/3d/smooth-worley
   :distance distance/3d/smooth-worley
   :finalize finalize/3d/smooth-worley)
+
+(defun smooth-worley/1d (position frequency xxhash &optional (lattice #'normal-lattice) (function :f2-f1))
+  (voronoi/1d position frequency xxhash lattice (voronoi-method :smooth-worley 1) function))
+
+(defun smooth-worley/2d (position frequency xxhash &optional (lattice #'normal-lattice) (function :f2-f1))
+  (voronoi/2d position frequency xxhash lattice (voronoi-method :smooth-worley 2) function))
+
+(defun smooth-worley/3d (position frequency xxhash &optional (lattice #'normal-lattice) (function :f2-f1))
+  (voronoi/3d position frequency xxhash lattice (voronoi-method :smooth-worley 3) function))
