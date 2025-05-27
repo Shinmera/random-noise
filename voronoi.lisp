@@ -53,7 +53,7 @@
           (finalize (voronoi-finalize method)))
      ,@body))
 
-(define-sample-function voronoi/1d ((position (point 1)) (frequency single-float) (xxhash xxhash) (lattice function) (method voronoi-method) &optional (function :f2-f1 keyword))
+(define-noise-function voronoi 1 ((lattice function) (method voronoi-method) &optional (function :f2-f1 keyword))
   (with-voronoi-method method
     (let ((x (lattice))
           (data (make-voronoi-data))
@@ -77,7 +77,7 @@
          (sample (- (bv data) (av data))
                  (* frequency (- (bdx data) (adx data)))))))))
 
-(define-sample-function voronoi/2d ((position (point 2)) (frequency single-float) (xxhash xxhash) (lattice function) (method voronoi-method) &optional (function :f2-f1 keyword))
+(define-noise-function voronoi 2 ((lattice function) (method voronoi-method) &optional (function :f2-f1 keyword))
   (with-voronoi-method method
     (let ((x (lattice)) (y (lattice))
           (data (make-voronoi-data))
@@ -115,7 +115,7 @@
                  (* frequency (- (bdx data) (adx data)))
                  (* frequency (- (bdy data) (ady data)))))))))
 
-(define-sample-function voronoi/3d ((position (point 3)) (frequency single-float) (xxhash xxhash) (lattice function) (method voronoi-method) &optional (function :f2-f1 keyword))
+(define-noise-function voronoi 3 ((lattice function) (method voronoi-method) &optional (function :f2-f1 keyword))
   (with-voronoi-method method
     (let ((x (lattice)) (y (lattice)) (z (lattice))
           (data (make-voronoi-data))

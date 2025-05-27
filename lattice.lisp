@@ -63,7 +63,7 @@
         ((eq lattice #'tiling-lattice) #'tiling-lattice/validate)
         (T (error "Unknown lattice type."))))
 
-(define-sample-function lattice/1d ((position (point 1)) (frequency single-float) (xxhash xxhash) (lattice function) (gradient function))
+(define-noise-function lattice 1 ((lattice function) (gradient function))
   (let ((span (lattice)))
     (declare (dynamic-extent span))
     (funcall lattice position frequency span)
@@ -72,7 +72,7 @@
         (sample (lerp a b (tt span))
                 (* frequency (+ (lerp adx bdx (tt span)) (* (dt span) (- b a)))))))))
 
-(define-sample-function lattice/2d ((position (point 2)) (frequency single-float) (xxhash xxhash) (lattice function) (gradient function))
+(define-noise-function lattice 2 ((lattice function) (gradient function))
   (let ((x (lattice)) (y (lattice)))
     (declare (dynamic-extent x y))
     (funcall lattice (aref position 0) frequency x)
@@ -90,7 +90,7 @@
                                    (+ (lerp cdy ddy (tt y)) (* (- d c) (dt y)))
                                    (tt x))))))))
 
-(define-sample-function lattice/3d ((position (point 3)) (frequency single-float) (xxhash xxhash) (lattice function) (gradient function))
+(define-noise-function lattice 3 ((lattice function) (gradient function))
   (let ((x (lattice)) (y (lattice)) (z (lattice)))
     (declare (dynamic-extent x y z))
     (funcall lattice (aref position 0) frequency x)
@@ -129,29 +129,29 @@
                                (tt y))
                          (tt x))))))))
 
-(define-sample-function perlin/1d ((position (point 1)) (frequency single-float) (xxhash xxhash) &optional (lattice #'normal-lattice function))
+(define-noise-function perlin 1 (&optional (lattice #'normal-lattice function))
   (lattice/1d position frequency xxhash lattice #'perlin-gradient/1d))
 
-(define-sample-function perlin/2d ((position (point 2)) (frequency single-float) (xxhash xxhash) &optional (lattice #'normal-lattice function))
+(define-noise-function perlin 2 (&optional (lattice #'normal-lattice function))
   (lattice/2d position frequency xxhash lattice #'perlin-gradient/2d))
 
-(define-sample-function perlin/3d ((position (point 3)) (frequency single-float) (xxhash xxhash) &optional (lattice #'normal-lattice function))
+(define-noise-function perlin 3 (&optional (lattice #'normal-lattice function))
   (lattice/3d position frequency xxhash lattice #'perlin-gradient/3d))
 
-(define-sample-function value/1d ((position (point 1)) (frequency single-float) (xxhash xxhash) &optional (lattice #'normal-lattice function))
+(define-noise-function value 1 (&optional (lattice #'normal-lattice function))
   (lattice/1d position frequency xxhash lattice #'value-gradient/1d))
 
-(define-sample-function value/2d ((position (point 2)) (frequency single-float) (xxhash xxhash) &optional (lattice #'normal-lattice function))
+(define-noise-function value 2 (&optional (lattice #'normal-lattice function))
   (lattice/2d position frequency xxhash lattice #'value-gradient/2d))
 
-(define-sample-function value/3d ((position (point 3)) (frequency single-float) (xxhash xxhash) &optional (lattice #'normal-lattice function))
+(define-noise-function value 3 (&optional (lattice #'normal-lattice function))
   (lattice/3d position frequency xxhash lattice #'value-gradient/3d))
 
-(define-sample-function simplex/1d ((position (point 1)) (frequency single-float) (xxhash xxhash) &optional (lattice #'normal-lattice function))
+(define-noise-function simplex 1 (&optional (lattice #'normal-lattice function))
   (lattice/1d position frequency xxhash lattice #'simplex-gradient/1d))
 
-(define-sample-function simplex/2d ((position (point 2)) (frequency single-float) (xxhash xxhash) &optional (lattice #'normal-lattice function))
+(define-noise-function simplex 2 (&optional (lattice #'normal-lattice function))
   (lattice/2d position frequency xxhash lattice #'simplex-gradient/2d))
 
-(define-sample-function simplex/3d ((position (point 3)) (frequency single-float) (xxhash xxhash) &optional (lattice #'normal-lattice function))
+(define-noise-function simplex 3 (&optional (lattice #'normal-lattice function))
   (lattice/3d position frequency xxhash lattice #'simplex-gradient/3d))

@@ -123,11 +123,11 @@
   :distance distance/3d/worley
   :finalize finalize/3d/worley)
 
-(define-sample-function worley/1d ((position (point 1)) (frequency single-float) (xxhash xxhash) &optional (lattice #'normal-lattice function) (function :f2-f1 keyword))
+(define-noise-function worley 1 (&optional (lattice #'normal-lattice function) (function :f2-f1 keyword))
   (voronoi/1d position frequency xxhash lattice (voronoi-method :worley 1) function))
 
-(define-sample-function worley/2d ((position (point 2)) (frequency single-float) (xxhash xxhash) &optional (lattice #'normal-lattice function) (function :f2-f1 keyword))
+(define-noise-function worley 2 (&optional (lattice #'normal-lattice function) (function :f2-f1 keyword))
   (voronoi/2d position frequency xxhash lattice (voronoi-method :worley 2) function))
 
-(define-sample-function worley/3d ((position (point 3)) (frequency single-float) (xxhash xxhash) &optional (lattice #'normal-lattice function) (function :f2-f1 keyword))
+(define-noise-function worley 3 (&optional (lattice #'normal-lattice function) (function :f2-f1 keyword))
   (voronoi/3d position frequency xxhash lattice (voronoi-method :worley 3) function))

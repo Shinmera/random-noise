@@ -77,3 +77,8 @@
                when (listp arg)
                collect `(declare (type ,(car (last arg)) ,(first arg))))
        ,@body)))
+
+(defmacro define-noise-function (kind arity args &body body)
+  (let ((name (intern (format NIL "~a/~d~a" kind arity :d))))
+    `(define-sample-function ,name ((position (point ,arity)) (frequency single-float) (xxhash xxhash) ,@args)
+       ,@body)))
