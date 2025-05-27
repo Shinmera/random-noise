@@ -8,14 +8,13 @@
   :source-control (:git "https://github.com/Shinmera/random-noise.git")
   :serial T
   :components ((:file "package")
-               (:file "toolkit")
-               (:file "value")
-               (:file "perlin")
-               (:file "simplex")
-               (:file "voronoi")
+               (:file "hash")
+               (:file "sample")
+               (:file "gradient")
+               (:file "lattice")
+               (:file "fractal")
                (:file "documentation"))
-  :depends-on (:documentation-utils
-               :3d-math)
+  :depends-on (:documentation-utils)
   :in-order-to ((asdf:test-op (asdf:test-op :random-noise/test))))
 
 (asdf:defsystem random-noise/test

@@ -1,0 +1,58 @@
+(in-package #:org.shirakumo.random-noise)
+
+(defconstant PRIME-A #b10011110001101110111100110110001)
+(defconstant PRIME-B #b10000101111010111100101001110111)
+(defconstant PRIME-C #b11000010101100101010111000111101)
+(defconstant PRIME-D #b00100111110101001110101100101111)
+(defconstant PRIME-E #b00010110010101100110011110110001)
+
+(deftype xxhash () '(unsigned-byte 32))
+
+(declaim (inline !32))
+(defun !32 (x)
+  (ldb (byte 32 0) x))
+
+(declaim (inline xxhash))
+(defun xxhash (&optional (seed 1))
+  (!32 (+ seed PRIME-E)))
+
+(declaim (inline xxhash-rotate-left xxhash-eat xxhash-eat-byte xxhash-int xxhash-byte xxhash-float))
+(defun xxhash-rotate-left (xxhash steps)
+  (declare (type xxhash xxhash))
+  (declare (type (integer 0 31) steps))
+  (declare (optimize speed (safety 0)))
+  (logior (!32 (ash xxhash steps))
+          (!32 (ash xxhash (- (- 32 steps))))))
+
+(defun xxhash-eat (xxhash data)
+  (declare (type xxhash xxhash data))
+  (declare (optimize speed (safety 0)))
+  (!32 (* PRIME-D (xxhash-rotate-left (!32 (+ xxhash (!32 (* data PRIME-C)))) 17))))
+
+(defun xxhash-eat-byte (xxhash data)
+  (declare (type xxhash xxhash))
+  (declare (type (unsigned-byte 8) data))
+  (declare (optimize speed (safety 0)))
+  (!32 (* PRIME-A (xxhash-rotate-left (!32 (+ xxhash (!32 (* data PRIME-E)))) 11))))
+
+(defun xxhash-int (xxhash)
+  (declare (type xxhash xxhash))
+  (declare (optimize speed (safety 0)))
+  (setf xxhash (logxor xxhash (ash xxhash -15)))
+  (setf xxhash (!32 (* xxhash PRIME-B)))
+  (setf xxhash (logxor xxhash (ash xxhash -13)))
+  (setf xxhash (!32 (* xxhash PRIME-C)))
+  (setf xxhash (logxor xxhash (ash xxhash -16)))
+  xxhash)
+
+(defun xxhash-byte (xxhash &optional (byte 0))
+  (declare (type xxhash xxhash))
+  (declare (type (integer 0 3) byte))
+  (declare (optimize speed (safety 1)))
+  (ldb (byte 8 (* 8 byte)) (xxhash-int xxhash)))
+
+(defun xxhash-float (xxhash &optional (byte 0))
+  (declare (type xxhash xxhash))
+  (declare (type (integer 0 3) byte))
+  (declare (optimize speed (safety 1)))
+  (* (xxhash-byte xxhash byte) (/ 255.0)))
