@@ -20,3 +20,5 @@
 
 (define-noise-function value 3 (&optional (lattice #'normal-lattice function))
   (lattice/3d position frequency xxhash lattice #'value-gradient/3d))
+
+(define-noise-toplevel value (&optional (lattice #'normal-lattice function)) lattice)

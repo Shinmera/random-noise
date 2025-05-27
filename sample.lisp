@@ -1,9 +1,10 @@
 (in-package #:org.shirakumo.random-noise)
 
-(deftype point (&optional (size 1))
-  (if (= 1 size)
-      'single-float
-      `(simple-array single-float (,size))))
+(deftype point (&optional size)
+  (etypecase size
+    ((eql *) '(or single-float (simple-array single-float (*))))
+    ((eql 1) 'single-float)
+    ((integer 2) `(simple-array single-float (,size)))))
 
 (declaim (inline sample))
 (defun sample (v &optional (dx 0f0) (dy 0f0) (dz 0f0))
@@ -82,3 +83,13 @@
   (let ((name (intern (format NIL "~a/~d~a" kind arity :d))))
     `(define-sample-function ,name ((position (point ,arity)) (frequency single-float) (xxhash xxhash) ,@args)
        ,@body)))
+
+(defmacro define-noise-toplevel (kind args &rest call-args)
+  `(progn
+     (declaim (inline ,kind))
+     (define-sample-function ,kind ((position point) (frequency single-float) (xxhash xxhash) ,@args)
+       (etypecase position
+         ,@(loop for arity from 1 to 3
+                 collect `((point ,arity)
+                           (,(intern (format NIL "~a/~d~a" kind arity :d))
+                            position frequency xxhash ,@call-args)))))))

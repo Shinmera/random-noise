@@ -128,3 +128,6 @@
                                (+ (lerp gdz hdz (tt z)) (* (- h g) (dt z)))
                                (tt y))
                          (tt x))))))))
+
+(define-noise-toplevel lattice ((lattice function) (gradient function))
+  lattice gradient)

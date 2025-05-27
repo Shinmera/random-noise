@@ -131,3 +131,6 @@
 
 (define-noise-function worley 3 (&optional (lattice #'normal-lattice function) (function :f2-f1 keyword))
   (voronoi/3d position frequency xxhash lattice (voronoi-method :worley 3) function))
+
+(define-noise-toplevel worley (&optional (lattice #'normal-lattice function) (function :f2-f1 keyword))
+  lattice function)

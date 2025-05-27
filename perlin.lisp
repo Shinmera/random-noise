@@ -19,3 +19,5 @@
 
 (define-noise-function perlin 3 (&optional (lattice #'normal-lattice function))
   (lattice/3d position frequency xxhash lattice #'perlin-gradient/3d))
+
+(define-noise-toplevel perlin (&optional (lattice #'normal-lattice function)) lattice)

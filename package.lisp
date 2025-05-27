@@ -6,36 +6,45 @@
   (:export
    #:lattice/1d
    #:lattice/2d
-   #:lattice/3d)
+   #:lattice/3d
+   #:lattice)
   (:export
    #:value/1d
    #:value/2d
-   #:value/3d)
+   #:value/3d
+   #:value)
   (:export
    #:perlin/1d
    #:perlin/2d
-   #:perlin/3d)
+   #:perlin/3d
+   #:perlin)
   (:export
    #:simplex/1d
    #:simplex/2d
-   #:simplex/3d)
+   #:simplex/3d
+   #:simplex)
   (:export
    #:fractal/1d
    #:fractal/2d
-   #:fractal/3d)
+   #:fractal/3d
+   #:fractal)
   (:export
    #:voronoi/1d
    #:voronoi/2d
-   #:voronoi/3d)
+   #:voronoi/3d
+   #:voronoi)
   (:export
    #:worley/1d
    #:worley/2d
-   #:worley/3d)
+   #:worley/3d
+   #:worley)
   (:export
    #:smooth-worley/1d
    #:smooth-worley/2d
-   #:smooth-worley/3d)
+   #:smooth-worley/3d
+   #:smooth-worley)
   (:export
    #:chebyshev/1d
    #:chebyshev/2d
-   #:chebyshev/3d))
+   #:chebyshev/3d
+   #:chebyshev))

@@ -20,3 +20,5 @@
 
 (define-noise-function simplex 3 (&optional (lattice #'normal-lattice function))
   (lattice/3d position frequency xxhash lattice #'simplex-gradient/3d))
+
+(define-noise-toplevel simplex (&optional (lattice #'normal-lattice function)) lattice)

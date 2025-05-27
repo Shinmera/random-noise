@@ -50,3 +50,6 @@
                 (* adx s)
                 (* ady s)
                 (* adz s))))))
+
+(define-noise-toplevel fractal ((generator function) &key (octaves 1 (unsigned-byte 16)) (lacunarity 2 (unsigned-byte 16)) (persistence 0.5f0 single-float))
+  generator :octaves octaves :lacunarity lacunarity :persistence persistence)

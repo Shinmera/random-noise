@@ -50,3 +50,6 @@
 
 (define-noise-function chebyshev 3 (&optional (lattice #'normal-lattice function) (function :f2-f1 keyword))
   (voronoi/3d position frequency xxhash lattice (voronoi-method :chebyshev 3) function))
+
+(define-noise-toplevel chebyshev (&optional (lattice #'normal-lattice function) (function :f2-f1 keyword))
+  lattice function)

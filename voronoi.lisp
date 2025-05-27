@@ -161,3 +161,6 @@
                  (* frequency (- (bdx data) (adx data)))
                  (* frequency (- (bdy data) (ady data)))
                  (* frequency (- (bdz data) (adz data)))))))))
+
+(define-noise-toplevel voronoi ((lattice function) (method voronoi-method) &optional (function :f2-f1 keyword))
+  lattice method function)
