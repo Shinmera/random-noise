@@ -128,30 +128,3 @@
                                (+ (lerp gdz hdz (tt z)) (* (- h g) (dt z)))
                                (tt y))
                          (tt x))))))))
-
-(define-noise-function perlin 1 (&optional (lattice #'normal-lattice function))
-  (lattice/1d position frequency xxhash lattice #'perlin-gradient/1d))
-
-(define-noise-function perlin 2 (&optional (lattice #'normal-lattice function))
-  (lattice/2d position frequency xxhash lattice #'perlin-gradient/2d))
-
-(define-noise-function perlin 3 (&optional (lattice #'normal-lattice function))
-  (lattice/3d position frequency xxhash lattice #'perlin-gradient/3d))
-
-(define-noise-function value 1 (&optional (lattice #'normal-lattice function))
-  (lattice/1d position frequency xxhash lattice #'value-gradient/1d))
-
-(define-noise-function value 2 (&optional (lattice #'normal-lattice function))
-  (lattice/2d position frequency xxhash lattice #'value-gradient/2d))
-
-(define-noise-function value 3 (&optional (lattice #'normal-lattice function))
-  (lattice/3d position frequency xxhash lattice #'value-gradient/3d))
-
-(define-noise-function simplex 1 (&optional (lattice #'normal-lattice function))
-  (lattice/1d position frequency xxhash lattice #'simplex-gradient/1d))
-
-(define-noise-function simplex 2 (&optional (lattice #'normal-lattice function))
-  (lattice/2d position frequency xxhash lattice #'simplex-gradient/2d))
-
-(define-noise-function simplex 3 (&optional (lattice #'normal-lattice function))
-  (lattice/3d position frequency xxhash lattice #'simplex-gradient/3d))

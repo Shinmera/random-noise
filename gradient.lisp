@@ -51,38 +51,3 @@
               (* r c0)
               (* r c1)
               (* r c2)))))
-
-(define-sample-function value-gradient/1d ((xxhash xxhash) (x single-float))
-  (declare (ignore x))
-  (sample (1- (* 2 (xxhash-float xxhash)))))
-
-(define-sample-function value-gradient/2d ((xxhash xxhash) (x single-float) (y single-float))
-  (declare (ignore x y))
-  (sample (1- (* 2 (xxhash-float xxhash)))))
-
-(define-sample-function value-gradient/3d ((xxhash xxhash) (x single-float) (y single-float) (z single-float))
-  (declare (ignore x y z))
-  (sample (1- (* 2 (xxhash-float xxhash)))))
-
-(define-sample-function perlin-gradient/1d ((xxhash xxhash) (x single-float))
-  (line xxhash x))
-
-(define-sample-function perlin-gradient/2d ((xxhash xxhash) (x single-float) (y single-float))
-  (s/ * (square xxhash x y)
-      (/ 2f0 0.53528f0)))
-
-(define-sample-function perlin-gradient/3d ((xxhash xxhash) (x single-float) (y single-float) (z single-float))
-  (s/ * (octahedron xxhash x y z)
-      (/ 1f0 0.56290f0)))
-
-(define-sample-function simplex-gradient/1d ((xxhash xxhash) (x single-float))
-  (s/ * (line xxhash x)
-      (/ 32f0 27f0)))
-
-(define-sample-function simplex-gradient/2d ((xxhash xxhash) (x single-float) (y single-float))
-  (s/ * (circle xxhash x y)
-      (/ 5.832f0 (sqrt 2f0))))
-
-(define-sample-function simplex-gradient/3d ((xxhash xxhash) (x single-float) (y single-float) (z single-float))
-  (s/ * (sphere xxhash x y z)
-      (/ 1024f0 (* 125f0 (sqrt 3f0)))))
