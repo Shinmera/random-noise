@@ -1,11 +1,41 @@
 (defpackage #:org.shirakumo.random-noise
   (:use #:cl)
   (:export
+   #:smoothstep
+   #:curl)
+  (:export
+   #:lattice/1d
+   #:lattice/2d
+   #:lattice/3d)
+  (:export
    #:value/1d
    #:value/2d
-   #:value/3d
-   #:value
+   #:value/3d)
+  (:export
    #:perlin/1d
    #:perlin/2d
-   #:perlin/3d
-   #:perlin))
+   #:perlin/3d)
+  (:export
+   #:simplex/1d
+   #:simplex/2d
+   #:simplex/3d)
+  (:export
+   #:fractal/1d
+   #:fractal/2d
+   #:fractal/3d)
+  (:export
+   #:voronoi/1d
+   #:voronoi/2d
+   #:voronoi/3d)
+  (:export
+   #:worley/1d
+   #:worley/2d
+   #:worley/3d)
+  (:export
+   #:smooth-worley/1d
+   #:smooth-worley/2d
+   #:smooth-worley/3d)
+  (:export
+   #:chebyshev/1d
+   #:chebyshev/2d
+   #:chebyshev/3d))
