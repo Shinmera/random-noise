@@ -7,14 +7,14 @@
   (setf (bv data) 2f0)
   data)
 
-(defun distance/1d/smooth-worley (x)
+(define-sample-function distance/1d/smooth-worley ((x single-float))
   (sample (abs x) (if (< x 0) +1f0 -1f0)))
 
-(defun distance/2d/smooth-worley (x y)
+(define-sample-function distance/2d/smooth-worley ((x single-float) (y single-float))
   (let ((v (sqrt (+ (* x x) (* y y)))))
     (sample v (- (/ x v)) (- (/ y v)))))
 
-(defun distance/3d/smooth-worley (x y z)
+(define-sample-function distance/3d/smooth-worley ((x single-float) (y single-float) (z single-float))
   (let ((v (sqrt (+ (* x x) (* y y) (* z z)))))
     (sample v (- (/ x v)) (- (/ y v)) (- (/ z v)))))
 
@@ -155,11 +155,11 @@
   :distance distance/3d/smooth-worley
   :finalize finalize/3d/smooth-worley)
 
-(defun smooth-worley/1d (position frequency xxhash &optional (lattice #'normal-lattice) (function :f2-f1))
+(define-sample-function smooth-worley/1d ((position (point 1)) (frequency single-float) (xxhash xxhash) &optional (lattice #'normal-lattice function) (function :f2-f1 keyword))
   (voronoi/1d position frequency xxhash lattice (voronoi-method :smooth-worley 1) function))
 
-(defun smooth-worley/2d (position frequency xxhash &optional (lattice #'normal-lattice) (function :f2-f1))
+(define-sample-function smooth-worley/2d ((position (point 2)) (frequency single-float) (xxhash xxhash) &optional (lattice #'normal-lattice function) (function :f2-f1 keyword))
   (voronoi/2d position frequency xxhash lattice (voronoi-method :smooth-worley 2) function))
 
-(defun smooth-worley/3d (position frequency xxhash &optional (lattice #'normal-lattice) (function :f2-f1))
+(define-sample-function smooth-worley/3d ((position (point 3)) (frequency single-float) (xxhash xxhash) &optional (lattice #'normal-lattice function) (function :f2-f1 keyword))
   (voronoi/3d position frequency xxhash lattice (voronoi-method :smooth-worley 3) function))

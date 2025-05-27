@@ -16,7 +16,7 @@
 (defun xxhash (&optional (seed 1))
   (!32 (+ seed PRIME-E)))
 
-(declaim (inline xxhash-rotate-left xxhash-eat xxhash-eat-byte xxhash-int xxhash-byte xxhash-float xhhash-float*))
+(declaim (inline xxhash-rotate-left xxhash-eat xxhash-eat-byte xxhash-int xxhash-byte xxhash-float xxhash-float*))
 (defun xxhash-rotate-left (xxhash steps)
   (declare (type xxhash xxhash))
   (declare (type (integer 0 31) steps))

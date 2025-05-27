@@ -56,3 +56,24 @@
           (if (<= 0 v) dx (- dx))
           (if (<= 0 v) dy (- dy))
           (if (<= 0 v) dz (- dz))))
+
+(defmacro define-sample-function (name args &body body)
+  `(progn
+     (declaim (ftype (function ,(loop with kind = '&required
+                                      for arg in args
+                                      collect (if (listp arg)
+                                                  (ecase kind
+                                                    (&required (second arg))
+                                                    (&optional (third arg))
+                                                    (&key (list (intern (string (first arg)) "KEYWORD") (third arg))))
+                                                  (setf kind arg)))
+                               (values single-float single-float single-float single-float &optional))
+                     ,name))
+     (defun ,name ,(loop for arg in args collect (cond ((not (listp arg)) arg)
+                                                       ((cddr arg) (butlast arg))
+                                                       (T (first arg))))
+       (declare (optimize speed (safety 1)))
+       ,@(loop for arg in args
+               when (listp arg)
+               collect `(declare (type ,(car (last arg)) ,(first arg))))
+       ,@body)))
