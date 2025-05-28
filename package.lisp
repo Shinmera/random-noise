@@ -15,7 +15,9 @@
    #:turbulence!
    #:sample/1d
    #:sample/2d
-   #:sample/3d)
+   #:sample/3d
+   #:curl/2d
+   #:curl/3d)
   ;; lattice.lisp
   (:export
    #:normal-lattice

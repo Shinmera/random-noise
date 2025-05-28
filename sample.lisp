@@ -152,3 +152,26 @@
                                  (setf (aref dz i) sdz))
                                (incf i))))
     (values v dx dy dz)))
+
+(define-noise-function curl 2 ((generator function))
+  (with-samples ((s (funcall generator position frequency xxhash)))
+    (sample s
+            sdy
+            (- sdx))))
+
+(define-noise-function curl 3 ((generator function) &optional (offset 100f0 single-float))
+  (let ((x (aref position 0))
+        (y (aref position 1))
+        (z (aref position 2)))
+    (flet ((p (x y z)
+             (setf (aref position 0) x)
+             (setf (aref position 1) y)
+             (setf (aref position 2) z)
+             position))
+      (with-samples ((sx (funcall generator (p z y (+ x offset)) frequency xxhash))
+                     (sy (funcall generator (p (+ x offset) z (+ y offset)) frequency xxhash))
+                     (sz (funcall generator (p y (+ x offset) z) frequency xxhash)))
+        (sample (/ (+ sx sy sz) 3)
+                (- szdx sydy)
+                (- sxdx szdy)
+                (- sydx sxdy))))))

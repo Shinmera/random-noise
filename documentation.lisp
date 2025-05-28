@@ -139,6 +139,37 @@ To each call of the sampling function the ARGS are appended as well.
 
 See XXHASH (type)
 See POINT (type)
+See SAMPLE (type)")
+
+  (function curl/2d
+    "Perform the curl operator on a noise sample.
+
+Returns the original noise sample and the curling vector in the
+sample's derivatives.
+
+The FUNCTION must be a sampling function that returns a SAMPLE and
+accepts (at least) the following arguments in order:
+  POINT FREQUENCY XXHASH
+
+See CURL/3D
+See XXHASH (type)
+See POINT (type)
+See SAMPLE (type)")
+
+  (function curl/3d
+    "Perform the curl operator on a noise sample.
+
+Returns an averaging of the noise sample and the curling vector in the
+sample's derivatives. Three samples are taken in order to estimate the
+curl, using the OFFSET to step away from the central sampling point.
+
+The FUNCTION must be a sampling function that returns a SAMPLE and
+accepts (at least) the following arguments in order:
+  POINT FREQUENCY XXHASH
+
+See CURL/2D
+See XXHASH (type)
+See POINT (type)
 See SAMPLE (type)"))
 
 ;; lattice.lisp
