@@ -1,6 +1,6 @@
 (in-package #:org.shirakumo.random-noise)
 
-(define-noise-function fractal 1 ((generator function) &key (octaves 1 (unsigned-byte 16)) (lacunarity 2 (unsigned-byte 16)) (persistence 0.5f0 single-float))
+(define-noise-function fractal 1 ((generator function) &key (octaves 1 (unsigned-byte 16)) (lacunarity 2f0 single-float) (persistence 0.5f0 single-float))
   (with-sample a (sample 0f0)
     (let ((amplitude-sum 0f0)
           (amplitude 1f0))
@@ -15,7 +15,7 @@
         (sample (* a s)
                 (* adx s))))))
 
-(define-noise-function fractal 2 ((generator function) &key (octaves 1 (unsigned-byte 16)) (lacunarity 2 (unsigned-byte 16)) (persistence 0.5f0 single-float))
+(define-noise-function fractal 2 ((generator function) &key (octaves 1 (unsigned-byte 16)) (lacunarity 2f0 single-float) (persistence 0.5f0 single-float))
   (with-sample a (sample 0f0)
     (let ((amplitude-sum 0f0)
           (amplitude 1f0))
@@ -32,7 +32,7 @@
                 (* adx s)
                 (* ady s))))))
 
-(define-noise-function fractal 3 ((generator function) &key (octaves 1 (unsigned-byte 16)) (lacunarity 2 (unsigned-byte 16)) (persistence 0.5f0 single-float))
+(define-noise-function fractal 3 ((generator function) &key (octaves 1 (unsigned-byte 16)) (lacunarity 2f0 single-float) (persistence 0.5f0 single-float))
   (with-sample a (sample 0f0)
     (let ((amplitude-sum 0f0)
           (amplitude 1f0))
@@ -51,5 +51,5 @@
                 (* ady s)
                 (* adz s))))))
 
-(define-noise-toplevel fractal ((generator function) &key (octaves 1 (unsigned-byte 16)) (lacunarity 2 (unsigned-byte 16)) (persistence 0.5f0 single-float))
+(define-noise-toplevel fractal ((generator function) &key (octaves 1 (unsigned-byte 16)) (lacunarity 2f0 single-float) (persistence 0.5f0 single-float))
   generator :octaves octaves :lacunarity lacunarity :persistence persistence)
