@@ -17,24 +17,35 @@
    #:sample/3d)
   ;; lattice.lisp
   (:export
+   #:normal-lattice
+   #:tiling-lattice
    #:lattice/1d
    #:lattice/2d
    #:lattice/3d
    #:lattice)
   ;; value.lisp
   (:export
+   #:value-gradient/1d
+   #:value-gradient/2d
+   #:value-gradient/3d
    #:value/1d
    #:value/2d
    #:value/3d
    #:value)
   ;; perlin.lisp
   (:export
+   #:perlin-gradient/1d
+   #:perlin-gradient/2d
+   #:perlin-gradient/3d
    #:perlin/1d
    #:perlin/2d
    #:perlin/3d
    #:perlin)
   ;; simplex.lisp
   (:export
+   #:simplex-gradient/1d
+   #:simplex-gradient/2d
+   #:simplex-gradient/3d
    #:simplex/1d
    #:simplex/2d
    #:simplex/3d
