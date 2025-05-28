@@ -5,6 +5,7 @@
    #:xxhash)
   ;; sample.lisp
   (:export
+   #:point
    #:sample
    #:with-sample
    #:with-samples

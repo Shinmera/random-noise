@@ -10,6 +10,7 @@
   '(values single-float single-float single-float single-float &optional))
 
 (declaim (inline sample))
+(declaim (ftype (function (single-float &optional single-float single-float single-float) sample) sample))
 (defun sample (v &optional (dx 0f0) (dy 0f0) (dz 0f0))
   (values v dx dy dz))
 
