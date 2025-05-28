@@ -25,9 +25,10 @@
   (logior (!32 (ash xxhash steps))
           (!32 (ash xxhash (- (- 32 steps))))))
 
-(declaim (ftype (function (xxhash (unsigned-byte 32)) (values xxhash &optional)) xxhash-eat))
+(declaim (ftype (function (xxhash (signed-byte 32)) (values xxhash &optional)) xxhash-eat))
 (defun xxhash-eat (xxhash data)
-  (declare (type xxhash xxhash data))
+  (declare (type xxhash xxhash))
+  (declare (type (signed-byte 32) data))
   (declare (optimize speed (safety 0)))
   (!32 (* PRIME-D (xxhash-rotate-left (!32 (+ xxhash (!32 (* data PRIME-C)))) 17))))
 

@@ -3,7 +3,7 @@
 (declaim (inline lattice p0 p1 g0 g1 tt dt))
 (defstruct (lattice
             (:conc-name NIL)
-            (:constructor lattice (&optional (p0 0) (p1 0) (g0 0f0) (g1 0f0) (tt 0f0) (dt 0f0)))
+            (:constructor make-lattice (&optional (p0 0) (p1 0) (g0 0f0) (g1 0f0) (tt 0f0) (dt 0f0)))
             (:copier NIL)
             (:predicate NIL))
   (p0 0 :type (unsigned-byte 32))
@@ -13,7 +13,7 @@
   (tt 0f0 :type single-float)
   (dt 0f0 :type single-float))
 
-(defun normal-lattice (coordinate frequency &optional (lattice (lattice)))
+(defun normal-lattice (coordinate frequency &optional (lattice (make-lattice)))
   (declare (type lattice lattice))
   (declare (type single-float coordinate frequency))
   (let* ((coordinate (* coordinate frequency))
@@ -31,7 +31,7 @@
   (declare (ignore frequency))
   point)
 
-(defun tiling-lattice (coordinate frequency &optional (lattice (lattice)))
+(defun tiling-lattice (coordinate frequency &optional (lattice (make-lattice)))
   (declare (type lattice lattice))
   (declare (type single-float coordinate frequency))
   (let* ((coordinate (* coordinate frequency))
@@ -64,7 +64,7 @@
         (T (error "Unknown lattice type."))))
 
 (define-noise-function lattice 1 ((lattice function) (gradient function))
-  (let ((span (lattice)))
+  (let ((span (make-lattice)))
     (declare (dynamic-extent span))
     (funcall lattice position frequency span)
     (with-sample a (funcall gradient (xxhash-eat xxhash (p0 span)) (g0 span))
@@ -73,7 +73,7 @@
                 (* frequency (+ (lerp adx bdx (tt span)) (* (dt span) (- b a)))))))))
 
 (define-noise-function lattice 2 ((lattice function) (gradient function))
-  (let ((x (lattice)) (y (lattice)))
+  (let ((x (make-lattice)) (y (make-lattice)))
     (declare (dynamic-extent x y))
     (funcall lattice (aref position 0) frequency x)
     (funcall lattice (aref position 1) frequency y)
@@ -91,7 +91,7 @@
                                    (tt x))))))))
 
 (define-noise-function lattice 3 ((lattice function) (gradient function))
-  (let ((x (lattice)) (y (lattice)) (z (lattice)))
+  (let ((x (make-lattice)) (y (make-lattice)) (z (make-lattice)))
     (declare (dynamic-extent x y z))
     (funcall lattice (aref position 0) frequency x)
     (funcall lattice (aref position 1) frequency y)

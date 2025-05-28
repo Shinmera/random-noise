@@ -55,7 +55,7 @@
 
 (define-noise-function voronoi 1 ((lattice function) (method voronoi-method) &optional (function :f2-f1 keyword))
   (with-voronoi-method method
-    (let ((x (lattice))
+    (let ((x (make-lattice))
           (data (make-voronoi-data))
           (validator (lattice-validator lattice)))
       (declare (dynamic-extent x data))
@@ -79,7 +79,7 @@
 
 (define-noise-function voronoi 2 ((lattice function) (method voronoi-method) &optional (function :f2-f1 keyword))
   (with-voronoi-method method
-    (let ((x (lattice)) (y (lattice))
+    (let ((x (make-lattice)) (y (make-lattice))
           (data (make-voronoi-data))
           (validator (lattice-validator lattice)))
       (declare (dynamic-extent x y data))
@@ -117,7 +117,7 @@
 
 (define-noise-function voronoi 3 ((lattice function) (method voronoi-method) &optional (function :f2-f1 keyword))
   (with-voronoi-method method
-    (let ((x (lattice)) (y (lattice)) (z (lattice))
+    (let ((x (make-lattice)) (y (make-lattice)) (z (make-lattice))
           (data (make-voronoi-data))
           (validator (lattice-validator lattice)))
       (declare (dynamic-extent x y z data))
