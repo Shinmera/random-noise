@@ -7,19 +7,26 @@ The library provides the following types of noise, in 1D, 2D, and 3D each:
 - ``lattice``/gradient noise
   - ``value`` noise
     [ image value.png ]
+    [ image value-diff.png ]
   - ``perlin`` noise
     [ image perlin.png ]
+    [ image perlin-diff.png ]
   - ``simplex`` noise
     [ image simplex.png ]
+    [ image simplex-diff.png ]
 - ``voronoi`` noise
   - ``worley`` noise
     [ image worley.png ]
+    [ image worley-diff.png ]
   - ``smooth-worley`` noise
     [ image smooth-worley.png ]
+    [ image smooth-worley-diff.png ]
   - ``chebyshev`` noise
     [ image chebyshev.png ]
+    [ image chebyshev-diff.png ]
 - ``fractal`` noise
   [ image fractal.png ]
+  [ image fractal-diff.png ]
 
 Each type of noise generation follows a basic argument structure:
 
