@@ -59,6 +59,7 @@
    #:fractal)
   ;; voronoi.lisp
   (:export
+   #:voronoi-method
    #:voronoi/1d
    #:voronoi/2d
    #:voronoi/3d
