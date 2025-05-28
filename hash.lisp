@@ -6,17 +6,18 @@
 (defconstant PRIME-D #b00100111110101001110101100101111)
 (defconstant PRIME-E #b00010110010101100110011110110001)
 
-(deftype xxhash () '(unsigned-byte 32))
-
 (declaim (inline !32))
 (defun !32 (x)
   (ldb (byte 32 0) x))
 
-(declaim (inline xxhash))
+(deftype xxhash () '(unsigned-byte 32))
+(declaim (inline xxhash xxhash-rotate-left xxhash-eat xxhash-eat-byte xxhash-int xxhash-byte xxhash-float xxhash-float*))
+
+(declaim (ftype (function (&optional (unsigned-byte 32)) (values xxhash &optional)) xxhash))
 (defun xxhash (&optional (seed 1))
   (!32 (+ seed PRIME-E)))
 
-(declaim (inline xxhash-rotate-left xxhash-eat xxhash-eat-byte xxhash-int xxhash-byte xxhash-float xxhash-float*))
+(declaim (ftype (function (xxhash (integer 0 31)) (values xxhash &optional)) xxhash-rotate-left))
 (defun xxhash-rotate-left (xxhash steps)
   (declare (type xxhash xxhash))
   (declare (type (integer 0 31) steps))
@@ -24,17 +25,20 @@
   (logior (!32 (ash xxhash steps))
           (!32 (ash xxhash (- (- 32 steps))))))
 
+(declaim (ftype (function (xxhash (unsigned-byte 32)) (values xxhash &optional)) xxhash-eat))
 (defun xxhash-eat (xxhash data)
   (declare (type xxhash xxhash data))
   (declare (optimize speed (safety 0)))
   (!32 (* PRIME-D (xxhash-rotate-left (!32 (+ xxhash (!32 (* data PRIME-C)))) 17))))
 
+(declaim (ftype (function (xxhash (unsigned-byte 8)) (values xxhash &optional)) xxhash-eat-byte))
 (defun xxhash-eat-byte (xxhash data)
   (declare (type xxhash xxhash))
   (declare (type (unsigned-byte 8) data))
   (declare (optimize speed (safety 0)))
   (!32 (* PRIME-A (xxhash-rotate-left (!32 (+ xxhash (!32 (* data PRIME-E)))) 11))))
 
+(declaim (ftype (function (xxhash) (values xxhash &optional)) xxhash-int))
 (defun xxhash-int (xxhash)
   (declare (type xxhash xxhash))
   (declare (optimize speed (safety 0)))
@@ -45,18 +49,21 @@
   (setf xxhash (logxor xxhash (ash xxhash -16)))
   xxhash)
 
+(declaim (ftype (function (xxhash &optional (integer 0 3)) (values (unsigned-byte 8) &optional)) xxhash-byte))
 (defun xxhash-byte (xxhash &optional (byte 0))
   (declare (type xxhash xxhash))
   (declare (type (integer 0 3) byte))
   (declare (optimize speed (safety 1)))
   (ldb (byte 8 (* 8 byte)) (xxhash-int xxhash)))
 
+(declaim (ftype (function (xxhash &optional (integer 0 3)) (values single-float &optional)) xxhash-float))
 (defun xxhash-float (xxhash &optional (byte 0))
   (declare (type xxhash xxhash))
   (declare (type (integer 0 3) byte))
   (declare (optimize speed (safety 1)))
-  (* (xxhash-byte xxhash byte) (/ 255.0)))
+  (* (xxhash-byte xxhash byte) (/ 255f0)))
 
+(declaim (ftype (function (xxhash (integer 0 32) (integer 0 32)) (values single-float &optional)) xxhash-float*))
 (defun xxhash-float* (xxhash size offset)
   (declare (type xxhash xxhash))
   (declare (type (integer 0 32) size offset))

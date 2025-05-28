@@ -6,6 +6,9 @@
     ((eql 1) 'single-float)
     ((integer 2) `(simple-array single-float (,size)))))
 
+(deftype sample ()
+  '(values single-float single-float single-float single-float &optional))
+
 (declaim (inline sample))
 (defun sample (v &optional (dx 0f0) (dy 0f0) (dz 0f0))
   (values v dx dy dz))
@@ -41,23 +44,6 @@
                (,op ady b)
                (,op adz b)))))
 
-(declaim (inline smoothstep))
-(defun smoothstep (v &optional (dx 0f0) (dy 0f0) (dz 0f0))
-  (declare (type single-float v dx dy dz))
-  (let ((d (* 6 v (- 1 v))))
-    (sample (* v v (- 3 (* 2 v)))
-            (* dx d)
-            (* dy d)
-            (* dz d))))
-
-(declaim (inline curl))
-(defun curl (v &optional (dx 0f0) (dy 0f0) (dz 0f0))
-  (declare (type single-float v dx dy dz))
-  (sample (abs v)
-          (if (<= 0 v) dx (- dx))
-          (if (<= 0 v) dy (- dy))
-          (if (<= 0 v) dz (- dz))))
-
 (defmacro define-sample-function (name args &body body)
   `(progn
      (declaim (ftype (function ,(loop with kind = '&required
@@ -68,7 +54,7 @@
                                                     (&optional (third arg))
                                                     (&key (list (intern (string (first arg)) "KEYWORD") (third arg))))
                                                   (setf kind arg)))
-                               (values single-float single-float single-float single-float &optional))
+                               sample)
                      ,name))
      (defun ,name ,(loop for arg in args collect (cond ((not (listp arg)) arg)
                                                        ((cddr arg) (butlast arg))
@@ -93,3 +79,26 @@
                  collect `((point ,arity)
                            (,(intern (format NIL "~a/~d~a" kind arity :d))
                             position frequency xxhash ,@call-args)))))))
+
+(declaim (inline smoothstep))
+(define-sample-function smoothstep ((v single-float) &optional (dx 0f0 single-float) (dy 0f0 single-float) (dz 0f0 single-float))
+  (let ((d (* 6 v (- 1 v))))
+    (sample (* v v (- 3 (* 2 v)))
+            (* dx d)
+            (* dy d)
+            (* dz d))))
+
+(defmacro smoothstep! (sampler)
+  `(with-sample a ,sampler
+     (smoothstep a adx ady adz)))
+
+(declaim (inline curl))
+(define-sample-function curl ((v single-float) &optional (dx 0f0 single-float) (dy 0f0 single-float) (dz 0f0 single-float))
+  (sample (abs v)
+          (if (<= 0 v) dx (- dx))
+          (if (<= 0 v) dy (- dy))
+          (if (<= 0 v) dz (- dz))))
+
+(defmacro curl! (sampler)
+  `(with-sample a ,sampler
+     (curl a adx ady adz)))
