@@ -1,0 +1,49 @@
+## About random-noise
+This library provides a variety of "coherent" noise generation functions. These types of noise are primarily used in procedural generation for visual effects and games.
+
+## How To
+The library provides the following types of noise, in 1D, 2D, and 3D each:
+
+- ``lattice``/gradient noise
+  - ``value`` noise
+  - ``perlin`` noise
+  - ``simplex`` noise
+- ``voronoi`` noise
+  - ``worley`` noise
+  - ``smooth-worley`` noise
+  - ``chebyshev`` noise
+- ``fractal`` noise
+
+Each type of noise generation follows a basic argument structure:
+
+1. ``position`` The ``point`` at which to evaluate the noise. For 1D noise this should be a single-float, for 2D and 3D noise a vector of single-floats.
+2. ``frequency`` The frequency of the noise signal, essentially a scaling factor. You can think of it as increased frequency squeezing more of the noise into the same domain.
+3. ``xxhash`` The hashing value used as the randomness source. If you want to use a particular seed to initialise the noise with, derive the hash via the ``xxhash`` function.
+
+Some types of noise, such as ``lattice``, ``voronoi``, and ``fractal`` noise take additional arguments. In particular ``value``, ``perlin``, and ``simplex`` are shorthands for specific types of ``lattice`` noise, and ``worley``, ``smooth-worley``, and ``chebyshev`` are shorthands for specific types of ``voronoi`` noise. The ``fractal`` noise is based on another noise function by combining multiple "octaves" or levels of the same noise.
+
+Each type of noise generator returns a ``sample``, which is (up to) four values based on the dimensionality of the noise:
+
+1. The value of the noise at the point.
+2. The partial derivative of the noise in X.
+3. The partial derivative of the noise in Y.
+4. The partial derivative of the noise in Z.
+
+The partial derivatives returned are analytical and thus more accurate than if one simply used a finite differences approach to approximate the derivative.
+
+All of these functions evaluate a specific point. In order to sample an entire domain of noise at a specific resolution, you can use the ``sample/1d``, ``sample/2d`` and ``sample/3d`` functions.
+
+While you can always use the standard ``multiple-value-bind`` to capture the sample values, you can also use the provided ``with-sample`` and ``with-samples`` for a slightly more convenient interface.
+
+Finally, you can also compute the curl of a 2D or 3D noise field using ``curl/2d`` and ``curl/3d`` respectively, or apply the turbulence operator to a sample using ``turbulence!``.
+
+## See Also
+You may also be interested in the following related projects:
+
+- ''random-state''(link https://shinmera.com/projects/random-state)
+  Various portable random number generator implementations.
+- ''random-sampling''(link https://shinmera.com/projects/random-sampling)
+  Various sampling distribution functions and volume sampling functions.
+
+## Attribution
+Most of the code in this is based on the excellent resources by Jasper Flick on catlikecoding.com
