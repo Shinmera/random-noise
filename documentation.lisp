@@ -32,7 +32,7 @@ a combination of all possible types it may return.")
 
 The values of a sample are four single floats, making up
 
-  The actual noise value
+  The actual noise value, in the range [-1, +1]
   The partial derivative in x
   The partial derivative in y
   The partial derivative in z
