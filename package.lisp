@@ -11,8 +11,8 @@
    #:with-samples
    #:smoothstep
    #:smoothstep!
-   #:curl
-   #:curl!
+   #:turbulence
+   #:turbulence!
    #:sample/1d
    #:sample/2d
    #:sample/3d)

@@ -93,16 +93,16 @@
   `(with-sample a ,sampler
      (smoothstep a adx ady adz)))
 
-(declaim (inline curl))
-(define-sample-function curl ((v single-float) &optional (dx 0f0 single-float) (dy 0f0 single-float) (dz 0f0 single-float))
+(declaim (inline turbulence))
+(define-sample-function turbulence ((v single-float) &optional (dx 0f0 single-float) (dy 0f0 single-float) (dz 0f0 single-float))
   (sample (abs v)
           (if (<= 0 v) dx (- dx))
           (if (<= 0 v) dy (- dy))
           (if (<= 0 v) dz (- dz))))
 
-(defmacro curl! (sampler)
+(defmacro turbulence! (sampler)
   `(with-sample a ,sampler
-     (curl a adx ady adz)))
+     (turbulence a adx ady adz)))
 
 (defun sample/1d (resolution frequency xxhash function &rest args)
   (let ((v (make-array (expt (1+ resolution) 1) :element-type 'single-float))

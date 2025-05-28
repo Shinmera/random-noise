@@ -84,16 +84,16 @@ See SAMPLE (type)")
 See SMOOTHSTEP
 See SAMPLE (type)")
   
-  (function curl
-    "Return the sample parts after applying the curl operator to them.
+  (function turbulence
+    "Return the sample parts after applying the turbulence operator to them.
 
-See CURL!
+See TURBULENCE!
 See SAMPLE (type)")
   
-  (function curl!
-    "Return the given sample value after applying the curl operator to it.
+  (function turbulence!
+    "Return the given sample value after applying the turbulence operator to it.
 
-See CURL
+See TURBULENCE
 See SAMPLE (type)")
   
   (function sample/1d
