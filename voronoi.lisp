@@ -83,8 +83,8 @@
           (data (make-voronoi-data))
           (validator (lattice-validator lattice)))
       (declare (dynamic-extent x y data))
-      (funcall lattice position frequency x)
-      (funcall lattice position frequency y)
+      (funcall lattice (aref position 0) frequency x)
+      (funcall lattice (aref position 1) frequency y)
       (funcall init data)
       (loop for u from -1 to +1
             for hx = (xxhash-eat xxhash (funcall validator (+ u (p0 x)) frequency))
@@ -121,9 +121,9 @@
           (data (make-voronoi-data))
           (validator (lattice-validator lattice)))
       (declare (dynamic-extent x y z data))
-      (funcall lattice position frequency x)
-      (funcall lattice position frequency y)
-      (funcall lattice position frequency z)
+      (funcall lattice (aref position 0) frequency x)
+      (funcall lattice (aref position 1) frequency y)
+      (funcall lattice (aref position 2) frequency z)
       (funcall init data)
       (loop for u from -1 to +1
             for hx = (xxhash-eat xxhash (funcall validator (+ u (p0 x)) frequency))
