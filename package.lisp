@@ -11,7 +11,10 @@
    #:smoothstep
    #:smoothstep!
    #:curl
-   #:curl!)
+   #:curl!
+   #:sample/1d
+   #:sample/2d
+   #:sample/3d)
   ;; lattice.lisp
   (:export
    #:lattice/1d
