@@ -4,11 +4,9 @@
 (defconstant SMOOTH-POLY 0.25f0)
 
 (defun init/smooth-worley (data)
+  (setf (av data) 0f0)
   (setf (bv data) 2f0)
   data)
-
-(define-sample-function distance/1d/smooth-worley ((x single-float))
-  (sample (abs x) (if (< x 0) +1f0 -1f0)))
 
 (define-sample-function distance/2d/smooth-worley ((x single-float) (y single-float))
   (let ((v (sqrt (+ (* x x) (* y y)))))
@@ -22,12 +20,19 @@
   (setf (adx data) (/ (adx data) (av data)))
   (setf (av data) (/ (log (av data)) (- SMOOTH-LSE)))
   (cond ((< 0 (av data))
-         (with-sample a (smoothstep (av data) (adx data) (ady data) (adz data))
+         (with-sample a (smoothstep (av data) (adx data))
            (setf (av data) a)
            (setf (adx data) adx)))
         (T
          (setf (av data) 0f0)
          (setf (adx data) 0f0)))
+  (cond ((and (< 0 (bv data)))
+         (with-sample b (smoothstep (bv data) (bdx data))
+           (setf (bv data) b)
+           (setf (bdx data) bdx)))
+        (T
+         (setf (bv data) 0f0)
+         (setf (bdx data) 0f0)))
   data)
 
 (defun finalize/2d/smooth-worley (data)
@@ -40,9 +45,18 @@
            (setf (adx data) adx)
            (setf (ady data) ady)))
         (T
-         (setf (av data) 1f0)
+         (setf (av data) 0f0)
          (setf (adx data) 0f0)
          (setf (ady data) 0f0)))
+  (cond ((and (< 0 (bv data)) (< (bv data) 1))
+         (with-sample b (smoothstep (bv data) (bdx data) (bdy data))
+           (setf (bv data) b)
+           (setf (bdx data) bdx)
+           (setf (bdy data) bdy)))
+        (T
+         (setf (bv data) 0f0)
+         (setf (bdx data) 0f0)
+         (setf (bdy data) 0f0)))
   data)
 
 (defun finalize/3d/smooth-worley (data)
@@ -57,7 +71,7 @@
            (setf (ady data) ady)
            (setf (adz data) adz)))
         (T
-         (setf (av data) 1f0)
+         (setf (av data) 0f0)
          (setf (adx data) 0f0)
          (setf (ady data) 0f0)
          (setf (adz data) 0f0)))
@@ -68,7 +82,7 @@
            (setf (bdy data) bdy)
            (setf (bdz data) bdz)))
         (T
-         (setf (bv data) 1f0)
+         (setf (bv data) 0f0)
          (setf (bdx data) 0f0)
          (setf (bdy data) 0f0)
          (setf (bdz data) 0f0)))
@@ -92,7 +106,7 @@
   data)
 
 (defun update/2d/smooth-worley (data v dx dy)
-  (let ((e (exp (* -1 SMOOTH-LSE v))))
+  (let ((e (exp (* (- SMOOTH-LSE) v))))
     (incf (av data) e)
     (incf (adx data) (* e dx))
     (incf (ady data) (* e dy))
@@ -139,7 +153,7 @@
 
 (define-voronoi-method (:smooth-worley 1)
   :init init/smooth-worley
-  :update update/1d/smooth-worley
+  :update update/1d/worley
   :distance distance/1d/smooth-worley
   :finalize finalize/1d/smooth-worley)
 
