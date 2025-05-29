@@ -154,7 +154,7 @@
 (define-voronoi-method (:smooth-worley 1)
   :init init/smooth-worley
   :update update/1d/worley
-  :distance distance/1d/smooth-worley
+  :distance distance/1d/worley
   :finalize finalize/1d/smooth-worley)
 
 (define-voronoi-method (:smooth-worley 2)
