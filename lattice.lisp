@@ -17,7 +17,7 @@
   (declare (type lattice lattice))
   (declare (type single-float coordinate frequency))
   (let* ((coordinate (* coordinate frequency))
-         (point (the (unsigned-byte 32) (floor coordinate)))
+         (point (the (unsigned-byte 32) (abs (floor coordinate))))
          (tt (- coordinate point)))
     (setf (p0 lattice) point)
     (setf (p1 lattice) (+ point 1))
